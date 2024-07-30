@@ -18,9 +18,11 @@ class Command:
             print(f"Error executing {self.name}:\n{ex}")
 
 
-
-
+loading_path  = ".\\customcmds" # Default loading path for custom cmds
+loaded_modules = [] # List of loaded modules, for the 'modules' command
 commands = [] # List of loaded in commands
+
+if not os.path.exists(loading_path): os.mkdir(loading_path) # Fix possible folder exclusion problems
 
 # funcs
 def isMain() -> bool:
@@ -87,9 +89,24 @@ _sys = Command("sys", "Execute OS command", __sysExec, "Execute a system command
 
 if isMain(): registerCommand(_sys)
 
+# modules
+
+def __modulesExec (args: list):
+   if len(loaded_modules) == 0:
+       print("No modules loaded.")
+   print("---------------------------------------------------------")
+   print("                   Module Name")
+   for mod in loaded_modules:
+       print(f"==> {mod}")
+   print("\n---------------------------------------------------------")
+
+_modules = Command("modules", "List of modules", __modulesExec, "Shows the list of currently loaded modules.")
+
+if isMain(): registerCommand(_modules)
+
 ##########################################################
 # Load Custom Cmds
-loading_path  = ".\\customcmds" # Default loading path for custom cmds
+
 
 def loadCustoms ():
     
@@ -99,6 +116,7 @@ def loadCustoms ():
         
         path_to = os.path.join(loading_path, cmdd)
         cmdd_name = cmdd[:-3]
+        if strutils.findInTable(loaded_modules, path_to): continue
 
         spec = importlib.util.spec_from_file_location(cmdd_name, path_to)
         module = importlib.util.module_from_spec(spec)
@@ -107,7 +125,7 @@ def loadCustoms ():
             
             module.main(globals())
             print("Loaded in module '", cmdd_name, "'")
-        
+        loaded_modules.append(path_to)
 
         
 
