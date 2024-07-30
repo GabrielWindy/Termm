@@ -121,21 +121,20 @@ def loadCustoms ():
     for cmdd in custom_cmds:
         
         path_to = os.path.join(loading_path, cmdd)
-        cmdd_name = cmdd[:-3]
+        cmdd_name = cmdd[:-3] # Remove the .py
         if strutils.findInTable(loaded_modules, path_to): continue
 
         spec = importlib.util.spec_from_file_location(cmdd_name, path_to)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         if hasattr(module, "main") and callable(module.main):
-            
-            module.main(globals())
+            module.main(globals()) # Provides all the funcs it needs and the variables
             print("Loaded in module '", cmdd_name, "'")
         loaded_modules.append(path_to)
 
         
 
-if isMain(): loadCustoms() # Prevent double loading
+if isMain(): loadCustoms() # Prevent double loading if a plugin so happens to import termm (bad idea)
 
 ###################### MAIN LOOP ###################################
 

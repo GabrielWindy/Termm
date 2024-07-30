@@ -8,4 +8,4 @@ Do I recommend you to install this and use this on a daily basis? No. Absolutely
 
 But if you so happen to install this, I recommend making your own commands, because its easy to do so.
 
-For now, there isn't a beautiful tutorial documentation thing to teach you how to do it, but you can check the [example command](customcmds/example.py) and try to learn from that, or just look at the termm.py file and try to understand it.
+I spent like, 3 hours of my life writing a tutorial on how to make custom commands, if you want to read it, feel free to go to [CUSTOM_COMMANDS.md](CUSTOM_COMMANDS.md).
