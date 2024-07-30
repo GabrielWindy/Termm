@@ -46,7 +46,12 @@ def registerCommand (cmd: Command):
         print("Attempted to register an invalid command, ignoring...")
         return
     commands.append(cmd)
-   
+## pre init header ##
+
+print(f"""Termm v0.0.1 (Pre-Release)
+{strutils.pickSplash()}
+--------------------------------------------------------------------
+""")
 
 ## default commands ##
 
@@ -72,6 +77,7 @@ if isMain(): registerCommand(_man)
 def __commdsExec (args: list):
    print("---------------------------------------------------------")
    print("                   Command | Description")
+   print("exit | Quits Termm")
    for cmd in commands:
        print(f"{cmd.name} | {cmd.desc}")
    print("\n---------------------------------------------------------")
