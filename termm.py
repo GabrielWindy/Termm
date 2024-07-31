@@ -6,11 +6,12 @@ import sys
 # defines
 
 class Command:
-    def __init__(self, name: str, desc: str, onexec, man: str):
+    def __init__(self, name: str, desc: str, onexec, man: str, visibility: bool= True):
         self.name = name
         self.desc = desc
         self.onexec = onexec
         self.man = man
+        self.visibility = visibility
     def execute(self, params):
         try:
             self.onexec(params)
@@ -79,6 +80,7 @@ def __commdsExec (args: list):
    print("                   Command | Description")
    print("exit | Quits Termm")
    for cmd in commands:
+       if not cmd.visibility: continue
        print(f"{cmd.name} | {cmd.desc}")
    print("\n---------------------------------------------------------")
 
