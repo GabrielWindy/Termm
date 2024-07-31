@@ -89,26 +89,13 @@ if isMain(): registerCommand(_commds)
 # sys
 
 def __sysExec (args: list):
-    os.system(' '.join(str(e) for e in args))
+    os.system(''.join(str(e) for e in args))
 
 _sys = Command("sys", "Execute OS command", __sysExec, "Execute a system command.\nUsage: sys <command>")
 
 if isMain(): registerCommand(_sys)
 
-# modules
 
-def __modulesExec (args: list):
-   if len(loaded_modules) == 0:
-       print("No modules loaded.")
-   print("---------------------------------------------------------")
-   print("                   Module Name")
-   for mod in loaded_modules:
-       print(f"==> {mod}")
-   print("\n---------------------------------------------------------")
-
-_modules = Command("modules", "List of modules", __modulesExec, "Shows the list of currently loaded modules.")
-
-if isMain(): registerCommand(_modules)
 
 ##########################################################
 # Load Custom Cmds
@@ -136,6 +123,32 @@ def loadCustoms ():
 
 if isMain(): loadCustoms() # Prevent double loading if a plugin so happens to import termm (bad idea)
 
+# modules
+
+def __modulesExec (args: list):
+    if len(args) == 0:
+        pass
+    elif args[0] == "rescan":
+        print("Scanning for new modules...")
+        loadCustoms()
+        print("Done!")
+        return
+    elif args[0] == "open":
+        os.startfile(loading_path)
+        return
+    
+    if len(loaded_modules) == 0:
+        print("No modules loaded.")
+    print("---------------------------------------------------------")
+    print("                   Module Name")
+    for mod in loaded_modules:
+        print(f"==> {mod}")
+    print("\n---------------------------------------------------------")
+
+_modules = Command("modules", "List of modules", __modulesExec, "Shows the list of currently loaded modules.\nUse 'rescan' as am argument to rescan for any possible new modules.\nUse 'open' as an argument to open the loading path in your file explorer.")
+
+
+if isMain(): registerCommand(_modules)
 ###################### MAIN LOOP ###################################
 
 while True:
