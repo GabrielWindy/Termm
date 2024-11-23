@@ -1,5 +1,7 @@
 # Termm
 
+Dead and will no longer receive updates. Im not deleting for historical purposes only.
+
 Termm is a modifiable terminal made in Python.
 
 I made it so I can make my life easier when managing things up.
